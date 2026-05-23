@@ -2,20 +2,39 @@
 
 [English](README.md)
 
-**在你的笔记本本地运行、支持 GPU 的私有文档翻译工具。不走云端，不需要 API Key，不接入第三方翻译服务。**
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![Gradio](https://img.shields.io/badge/UI-Gradio-orange)
+![Model](https://img.shields.io/badge/Model-NLLB--200--600M-green)
+![CUDA](https://img.shields.io/badge/CUDA-Ready-76B900)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
-NoCloud Translate 是一个本地 Gradio 文档翻译 WebUI，使用 `facebook/nllb-200-distilled-600M`。它支持 CPU 兼容模式，也支持 NVIDIA CUDA GPU 加速。
+**🔒 把私人文档留在自己的电脑上翻译。不走云端，不需要 API Key，不接入第三方翻译服务。**
 
-## 项目亮点
+NoCloud Translate 是一个本地文档翻译 WebUI，使用 `facebook/nllb-200-distilled-600M`，支持 TXT、MD、DOCX。它提供清爽的浏览器界面、CPU/GPU 切换、长文档分块处理、双语界面，以及可下载的翻译结果。
 
-- **本地隐私**：文档留在你的电脑上。
-- **不使用翻译 API**：不依赖 Google Cloud、AWS、DeepL、OpenAI API 或其他在线翻译服务。
-- **CUDA 加速**：已在 NVIDIA RTX 3060 Laptop GPU 6GB VRAM 上测试。
-- **CPU fallback**：CPU 模式始终可用。
-- **简单 WebUI**：上传文档、选择语言、翻译、下载。
-- **长文档处理**：按段落切分，让长文本保持在模型输入限制内。
+## ✦ 为什么做它
 
-## 支持语言
+大多数翻译工具默认把文本交给远端服务。NoCloud Translate 选择相反的路径：文档留在本地，模型在本地运行，同时保留一个简单好用的 WebUI。
+
+适合这些场景：
+
+- 📝 笔记、草稿、学习资料、内部文档。
+- 🌏 English、简体中文、繁体中文、Filipino / Tagalog 翻译。
+- 🔐 需要本地隐私的笔记本工作流。
+- ⚡ NVIDIA GPU CUDA 加速，也可随时切换 CPU 模式。
+
+## ✦ 你会得到什么
+
+- 🔒 **本地隐私**：翻译在你的电脑上完成。
+- 🖥️ **一键 WebUI**：双击 `run.bat`，打开 `127.0.0.1:7860`，开始翻译。
+- 🎛️ **CPU / GPU 可控**：翻译前手动选择兼容模式或 CUDA 加速。
+- 🟢 **清楚的状态灯**：绿色代表启用，红色代表未启用。
+- 📄 **文档感知分块**：段落顺序保留，长段落自动拆分。
+- 🚀 **Lazy loading**：点击开始翻译后才加载模型。
+- ⏱️ **有用的进度文字**：当前 chunk、总 chunk、已用时间和动态点。
+- ⬇️ **直接下载结果**：TXT/MD 输入输出 TXT，DOCX 输入输出 DOCX。
+
+## 🌐 支持语言
 
 | 语言 | NLLB code |
 | --- | --- |
@@ -24,53 +43,20 @@ NoCloud Translate 是一个本地 Gradio 文档翻译 WebUI，使用 `facebook/n
 | 繁体中文 | `zho_Hant` |
 | Filipino / Tagalog | `tgl_Latn` |
 
-## 功能列表
+## 📁 支持文件
 
-- 顶部 CPU / GPU 运行模式选择。
-- CPU 和 GPU 红绿状态灯。
-- 即使检测到 CUDA，也允许手动选择 CPU。
-- 如果选择 GPU 但 CUDA 不可用，会显示明确错误。
-- WebUI 界面语言切换：`ENG / 中文`。
-- 支持上传 `TXT`、`MD`、`DOCX`。
-- 不支持格式固定提示：`Unsupported File Format. Click OK to upload again.`
-- 源语言支持 `Auto Detect`。
-- 目标语言支持全部已列语言。
-- 点击 `Start Translation / 开始翻译` 后才加载模型。
-- 相同 runtime/model 组合会缓存复用，避免重复加载。
-- 按段落优先切分，长段落继续切成更小 chunk。
-- 显示当前 chunk / 总 chunk、已用时间和动态点。
-- 不显示不准确的百分比进度条。
-- 翻译完成后显示文本预览，并提供下载按钮。
-- Windows 双击启动脚本：`run.bat`。
-- CUDA 安装辅助脚本：`install_gpu_cuda.bat`。
+| 输入 | 输出 |
+| --- | --- |
+| `.txt` | `.txt` |
+| `.md` | `.txt` |
+| `.docx` | `.docx` |
 
-## 环境要求
+DOCX 输出保留段落结构。
 
-- OS：Windows 10 / 11
-- Python：3.10+
-- RAM：最低 16 GB，推荐 32 GB
-- CPU 模式：Intel Core i7 级别 CPU 或更高
-- GPU 模式：NVIDIA CUDA GPU，已测试 RTX 3060 Laptop GPU 6GB VRAM
-
-## 支持的文件格式
-
-- `.txt`
-- `.md`
-- `.docx`
-
-TXT 和 MD 输入会输出 TXT。DOCX 输入会输出 DOCX，并保留段落结构。
-
-## 快速开始
-
-克隆或下载仓库后，进入项目目录：
+## ⚡ 快速开始
 
 ```bat
 cd nocloud-translate
-```
-
-启动 WebUI：
-
-```bat
 run.bat
 ```
 
@@ -82,7 +68,7 @@ http://127.0.0.1:7860
 
 应用绑定到 `127.0.0.1`，不会创建公网分享链接。
 
-## 手动安装
+## 🧰 手动安装
 
 ```bat
 python -m venv venv
@@ -91,46 +77,53 @@ python -m venv venv
 .\venv\Scripts\python.exe web_ui.py
 ```
 
-## CPU 模式
+## 🚀 CUDA 安装
 
-选择 `CPU` 可获得最广泛的兼容性。CPU 模式使用标准 PyTorch CPU 推理，不依赖 CUDA。
-
-## GPU 模式
-
-当 PyTorch 检测到 NVIDIA CUDA GPU 后，选择 `GPU`。
-
-Windows CUDA 安装运行：
+Windows 上使用 NVIDIA GPU 加速：
 
 ```bat
 install_gpu_cuda.bat
 ```
 
-该脚本会把 CUDA 版 PyTorch 安装到本项目的 `venv`，并打印 CUDA 检查结果。
-
-预期 CUDA 检查：
+预期检查结果：
 
 ```text
 cuda available: True
 device: NVIDIA GeForce RTX 3060 Laptop GPU
 ```
 
-手动 CUDA 检查：
+手动检查：
 
 ```bat
 .\venv\Scripts\python.exe -c "import torch; print(torch.__version__); print(torch.cuda.is_available()); print(torch.version.cuda); print(torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'N/A')"
 ```
 
-## 示例
+## 🖥️ 硬件目标
 
-项目包含示例输入文件：
+- OS：Windows 10 / 11
+- Python：3.10+
+- RAM：最低 16 GB，长文档使用 32 GB
+- CPU 模式：Intel Core i7 级别 CPU 或更高
+- GPU 模式：NVIDIA CUDA GPU，已测试 RTX 3060 Laptop GPU 6GB VRAM
+
+## ✅ 第一次翻译
+
+项目包含示例文件：
 
 ```text
 examples/sample_en.txt
 ```
 
-在 WebUI 中上传它，选择 `English` 到 `Simplified Chinese`，然后点击 `Start Translation / 开始翻译`。
+在 WebUI 中：
 
-## 项目结构
+1. 🎛️ 选择 `CPU` 或 `GPU`。
+2. 📄 上传 `examples/sample_en.txt`。
+3. 🌐 源语言选择 `English`。
+4. 🌐 目标语言选择 `Simplified Chinese`。
+5. ▶️ 点击 `Start Translation / 开始翻译`。
+6. ⬇️ 下载翻译后的文档。
+
+## 🧱 项目结构
 
 ```text
 nocloud-translate/
@@ -149,28 +142,28 @@ nocloud-translate/
 └── web_ui.py
 ```
 
-## 模型下载
+## 📦 模型下载
 
-首次运行时，如果本地 Hugging Face cache 中没有 `facebook/nllb-200-distilled-600M`，程序会下载模型文件。模型文件缓存完成后，翻译使用本地缓存模型运行。
+首次使用时，如果本地缓存中没有 `facebook/nllb-200-distilled-600M`，应用会从 Hugging Face 下载模型。模型文件缓存完成后，翻译会使用本地缓存文件。
 
-## 常见问题
+## ❓ 常见问题
 
 ### 是否使用在线翻译 API？
 
 不使用。翻译由本地的 `facebook/nllb-200-distilled-600M` 模型完成。
 
-### 为什么 GPU 模式报错？
+### GPU 模式不可用时会怎样？
 
-说明 PyTorch 当前无法检测到 CUDA GPU。运行 `install_gpu_cuda.bat`，重启 WebUI 后再选择 GPU。
+WebUI 会显示明确的 CUDA 错误，CPU 模式仍然可用。
 
 ### Auto Detect 如何工作？
 
 Auto Detect 使用本地字符规则。中文字符占比高的文本会识别为简体中文；ASCII 英文占比高的文本会识别为 English；模糊文本需要手动选择源语言。
 
-### 为什么不能整篇文档一次性翻译？
+### 为什么要把文档切成 chunks？
 
 NLLB 存在输入长度限制。NoCloud Translate 会把文档切成有序 chunk，再按顺序合并翻译结果。
 
-## License
+## 📜 License
 
 MIT License。见 [LICENSE](LICENSE)。
